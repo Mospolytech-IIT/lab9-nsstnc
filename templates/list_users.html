@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список пользователей</title>
+    <script>
+        function deleteUser(userId) {
+            if (confirm("Вы уверены, что хотите удалить этого пользователя?")) {
+                fetch(`/users/${userId}`, {
+                    method: "DELETE",
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Пользователь успешно удалён.");
+                        location.reload();
+                    } else {
+                        alert("Ошибка при удалении пользователя.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Ошибка:", error);
+                    alert("Произошла ошибка при удалении.");
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Список пользователей</h1>
+    <ul>
+        {% for user in users %}
+            <li>
+                {{ user.username }} ({{ user.email }})
+                <a href="/users/{{ user.id }}">Редактировать</a>
+                <button onclick="deleteUser({{ user.id }})">Удалить</button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Создать нового пользователя</h2>
+    <form action="/users" method="post">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="email">Электронная почта:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <button type="submit">Создать пользователя</button>
+    </form>
+</body>
+</html>

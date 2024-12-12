@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать пост</title>
+</head>
+<body>
+    <h1>Редактировать пост</h1>
+
+    <form action="/posts/{{ post.id }}" method="post">
+        <label for="content">Контент:</label>
+        <textarea id="content" name="content" required>{{ post.content }}</textarea><br>
+
+        <button type="submit">Обновить</button>
+    </form>
+
+    <br>
+    <a href="/posts">Назад</a>
+</body>
+</html>
